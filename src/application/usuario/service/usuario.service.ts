@@ -48,7 +48,7 @@ export class UsuarioService {
     
           return await queryRunner.manager.save(RolUsuario, rolUser)
         })
-      )      
+      )
       queryRunner.commitTransaction()
 
     }catch (err) {

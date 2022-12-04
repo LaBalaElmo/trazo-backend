@@ -22,4 +22,8 @@ export class RolService {
     }
     return roles;
   }
+
+  async getRolesByUserId(userId: number): Promise<Rol[]>{
+    return await this.rolRepository.findRolesByUserId(userId);
+  }
 }

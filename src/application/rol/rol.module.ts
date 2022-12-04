@@ -12,6 +12,9 @@ import { RolService } from './service/rol.service';
     TypeOrmModule.forFeature([
       Rol
     ])
+  ],
+  exports: [
+    RolService
   ]
 })
 export class RolModule {}

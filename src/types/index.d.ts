@@ -3,7 +3,7 @@ import 'express-session'
 declare global {
   type PassportOidcUser = {
     id: string
-    roles: Array<string>
+    roles: Array<number>
   }
 }
 

@@ -26,6 +26,7 @@ export class AuthController {
     }
   }
 
+  //@UseGuards(GoogleOauthGuard)
   @Post('login')
   async login(@Body() body){
     const {token, email} = body

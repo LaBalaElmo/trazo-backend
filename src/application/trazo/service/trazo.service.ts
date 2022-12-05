@@ -26,7 +26,6 @@ export class TrazoService {
       trazoHome.pasoActual = trazo.pasoActual;
       return trazoHome;
     })
-    console.log(trazosHome)
     return trazosHome;
   }
 }

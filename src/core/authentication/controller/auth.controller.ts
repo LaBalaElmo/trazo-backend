@@ -20,9 +20,11 @@ export class AuthController {
   @Post('register')
   async registerUser(@Body() body: RegisterDto) {
     const user: Usuario = await this.usuarioService.saveUser(body)
+    const roles: Rol[] = await this.rolService.getRolesByUserId(user.id)
     return {
       token: await this.authenticationService.generateToken(user.id, body.idRol),
-      idUsuario: user.id
+      idUsuario: user.id,
+      roles: roles.map(rol => rol.id)
     }
   }
 
@@ -34,7 +36,8 @@ export class AuthController {
     const roles: Rol[] = await this.rolService.getRolesByUserId(user.idUsuario)
     return {
       token: await this.authenticationService.generateToken(user.idUsuario, roles.map(rol => rol.id)),
-      idUsuario: user.idUsuario
+      idUsuario: user.idUsuario,
+      roles: roles.map(rol => rol.id)
     }
   }
 }

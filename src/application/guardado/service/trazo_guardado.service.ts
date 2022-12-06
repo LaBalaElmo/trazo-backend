@@ -29,4 +29,8 @@ export class TrazoGuardadoService {
     })
     return trazosGuardados;
   }
+
+  async getSpecificTrazo(idTrazoGuardado){
+    return this.trazoGuardadoRepository.findTrazoGuardadoById(idTrazoGuardado);
+  }
 }

@@ -15,9 +15,21 @@ export class TrazoGuardadoRepository {
     .leftJoinAndSelect('trazoGuardado.pasoGuardado', 'pasoGuardado')
     .select([
       'trazoGuardado',
-      'pasoGuardado'
+      'pasoGuardado.nombre'
     ]);
 
     return await query.getMany()
+  }
+
+  async findTrazoGuardadoById(trazoGuardadoId): Promise<TrazoGuardado>{
+    return await this.dataSource
+    .getRepository(TrazoGuardado)
+    .createQueryBuilder('trazoGuardado')
+    .leftJoinAndSelect('trazoGuardado.pasoGuardado', 'pasoGuardado')
+    .where('trazoGuardado.id = :id', {id: trazoGuardadoId})
+    .select([
+      'trazoGuardado',
+      'pasoGuardado'
+    ]).getOne();
   }
 }

@@ -16,12 +16,14 @@ export class TrazoService {
       const trazoHome: TrazoHomeDto ={
         id: 0,
         cantidadPasos: 0,
+        descripcion: '',
         nombre: '',
         nombrePasos: [],
         pasoActual: 0
       }
       trazoHome.id = trazo.id;
       trazoHome.cantidadPasos = trazo.cantidadPasos;
+      trazoHome.descripcion = trazo.descripcion;
       trazoHome.nombre = trazo.nombre;
       trazoHome.nombrePasos = trazo.paso.map(paso => paso.nombre);
       trazoHome.pasoActual = trazo.pasoActual;

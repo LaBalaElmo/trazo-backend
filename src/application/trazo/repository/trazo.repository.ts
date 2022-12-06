@@ -18,6 +18,7 @@ export class TrazoRepository {
     .select([
       'trazo.id',
       'trazo.nombre',
+      'trazo.descripcion',
       'trazo.cantidadPasos',
       'trazo.pasoActual',
       'paso.nombre'

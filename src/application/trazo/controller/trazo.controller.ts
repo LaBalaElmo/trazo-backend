@@ -14,7 +14,7 @@ export class TrazoController {
   ){}
 
   @UseGuards(JwtAuthGuard)
-  @Get('list')
+  @Get('home')
   async trazoListByUser(@Req() req): Promise<TrazoHomeDto[]>{
     const user = req.user;
     return await this.trazoService.getTrazosByUser(user.id)

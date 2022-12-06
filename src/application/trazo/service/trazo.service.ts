@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { TrazoHomeDto } from '../dto/trazo_home.dto';
+import { Trazo } from '../entity/trazo.entity';
 import { TrazoRepository } from '../repository/trazo.repository';
 
 @Injectable()
@@ -9,8 +10,8 @@ export class TrazoService {
     private trazoRepository: TrazoRepository
   ){}
 
-  async getTrazoByUser(userId: number): Promise<TrazoHomeDto[]>{
-    const trazo = await this.trazoRepository.findTrazoByUser(userId)
+  async getTrazosByUser(userId: number): Promise<TrazoHomeDto[]>{
+    const trazo = await this.trazoRepository.findTrazosByUser(userId)
     const trazosHome: TrazoHomeDto[] = trazo.map(trazo => {
       const trazoHome: TrazoHomeDto ={
         id: 0,
@@ -27,5 +28,9 @@ export class TrazoService {
       return trazoHome;
     })
     return trazosHome;
+  }
+
+  async getSpecificTrazo(trazoId: number): Promise<Trazo>{
+    return this.trazoRepository.findTrazoById(trazoId);
   }
 }

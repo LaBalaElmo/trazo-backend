@@ -8,7 +8,7 @@ export class TrazoRepository {
     private dataSource: DataSource
   ){}
 
-  async findTrazoByUser(userId){
+  async findTrazosByUser(userId: number){
     const query = this.dataSource
     .getRepository(Trazo)
     .createQueryBuilder('trazo')
@@ -24,5 +24,19 @@ export class TrazoRepository {
     ])
 
     return query.getMany();
+  }
+
+  async findTrazoById(trazoId: number){
+    const query = this.dataSource
+    .getRepository(Trazo)
+    .createQueryBuilder('trazo')
+    .innerJoinAndSelect('trazo.paso', 'paso')
+    .where('trazo.id = :trazoId', {trazoId: trazoId})
+    .select([
+      'trazo',
+      'paso'
+    ]);
+
+    return query.getOne();
   }
 }

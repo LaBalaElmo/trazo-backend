@@ -33,6 +33,10 @@ export class TrazoService {
   }
 
   async getSpecificTrazo(trazoId: number): Promise<Trazo>{
-    return this.trazoRepository.findTrazoById(trazoId);
+    return await this.trazoRepository.findTrazoById(trazoId);
+  }
+
+  async getTrazosByState(terminado: boolean): Promise<Trazo[]>{
+    return await this.trazoRepository.findTrazosByState(terminado)
   }
 }

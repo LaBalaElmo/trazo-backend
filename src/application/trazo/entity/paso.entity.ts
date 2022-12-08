@@ -52,7 +52,8 @@ export class Paso extends BaseEntity {
     idTrazo: number;
 
     @ManyToOne(() => Trazo, (trazo) => trazo.paso,{
-        nullable: false
+        nullable: false,
+        onDelete: "CASCADE"
     })
     @JoinColumn([{name: "id_trazo", referencedColumnName: "id"}])
     trazo: Trazo;

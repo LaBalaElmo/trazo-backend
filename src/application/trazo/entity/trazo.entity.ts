@@ -38,7 +38,8 @@ export class Trazo extends BaseEntity {
     idUsuario: number;
 
     @ManyToOne(() => Usuario, (usuario) => usuario.trazo,{
-        nullable: false
+        nullable: false,
+        onDelete: "CASCADE"
     })
     @JoinColumn([{name: "id_usuario", referencedColumnName: "id"}])
     usuario: Usuario;

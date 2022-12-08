@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from 'src/core/authentication/guard/jwt-auth.guard';
 import { TrazoHomeDto } from '../dto/trazo_home.dto';
@@ -18,6 +18,12 @@ export class TrazoController {
   async trazoListByUser(@Req() req): Promise<TrazoHomeDto[]>{
     const user = req.user;
     return await this.trazoService.getTrazosByUser(user.id)
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/admin')
+  async trazoFinishedOrInProcess(@Query('terminados') terminados: boolean){
+    return await this.trazoService.getTrazosByState(terminados)
   }
 
   @UseGuards(JwtAuthGuard)

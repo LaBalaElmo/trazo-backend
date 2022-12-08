@@ -40,4 +40,17 @@ export class TrazoRepository {
 
     return query.getOne();
   }
+
+  async findTrazosByState(terminado: boolean): Promise<Trazo[]>{
+    const query = this.dataSource.getRepository(Trazo)
+    .createQueryBuilder('trazo')
+    .leftJoinAndSelect('trazo.paso', 'paso')
+    .where('trazo.estaTerminado = :terminado', {terminado: terminado})
+    .select([
+      'trazo',
+      'paso'
+    ])
+
+    return query.getMany()
+  }
 }

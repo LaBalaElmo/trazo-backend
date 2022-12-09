@@ -24,7 +24,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
             synchronize: false,
           })
           const enforcer = await newEnforcer(
-            "C:/Users/Rodrigo/Desktop/trazo_backend/src/core/config/authorization/model.conf",
+            join(__dirname.replace('\\dist', ''), 'model.conf'),
             adapter
           )
           enforcer.enableLog(false)

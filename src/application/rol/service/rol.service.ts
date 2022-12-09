@@ -10,7 +10,7 @@ export class RolService {
     private rolRepository: RolRepository,
   ) { }
 
-  async saveRoles(rol: Rol): Promise<Rol> {
+  async saveRol(rol: Rol): Promise<Rol> {
     return await this.rolRepository.saveRol(rol)
   }
 
@@ -25,5 +25,13 @@ export class RolService {
 
   async getRolesByUserId(userId: number): Promise<Rol[]>{
     return await this.rolRepository.findRolesByUserId(userId);
+  }
+
+  async getAllRoles(){
+    return await this.rolRepository.findAllRoles()
+  }
+
+  async getAllPublicRoles(){
+    return await this.rolRepository.findPublicRoles()
   }
 }

@@ -35,4 +35,12 @@ export class RolRepository {
   async saveRol(rol: Rol): Promise<Rol>{
     return await this.dataSource.getRepository(Rol).save(rol);
   }
+
+  async findAllRoles(): Promise<Rol[]>{
+    return this.dataSource.getRepository(Rol).find();
+  }
+
+  async findPublicRoles(): Promise<Rol[]>{
+    return this.dataSource.getRepository(Rol).find({where: {esPublico: true}})
+  }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query, Req, UseGuards, Delete } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from 'src/core/authentication/guard/jwt-auth.guard';
 import { TrazoHomeDto } from '../dto/trazo_home.dto';
@@ -27,9 +27,28 @@ export class TrazoController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Post()
+  async saveTrazo(@Body() body: Partial<Trazo>): Promise<Trazo>{
+    return this.trazoService.saveTrazo(body)
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put()
+  async modifyTrazo(@Body() body: Partial<Trazo>){
+    return this.trazoService.updateTrazo(body)
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @UseGuards(TrazoGuard)
+  @Delete(':id')
+  async removeTrazo(@Param('id') trazoId: number){
+    return this.trazoService.deleteTrazo(trazoId)
+  }
+
+  @UseGuards(JwtAuthGuard)
   @UseGuards(TrazoGuard)
   @Get(':id')
-  async singleTrazo(@Param('id') trazoId: number): Promise<Trazo>{
+  async getSingleTrazo(@Param('id') trazoId: number): Promise<Trazo>{
     return await this.trazoService.getSpecificTrazo(trazoId);
   }
 }

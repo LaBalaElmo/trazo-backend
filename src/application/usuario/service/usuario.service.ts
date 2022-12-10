@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Rol } from 'src/application/rol/entity/rol.entity';
 import { RolRepository } from 'src/application/rol/repository/rol.repository';
 import { RolService } from 'src/application/rol/service/rol.service';
+import { Paso } from 'src/application/trazo/entity/paso.entity';
 import { RolUsuario } from 'src/core/authorization/entity/rol_usuario.entity';
-import { RolUsuarioService } from 'src/core/authorization/service/rol_usuario.service';
 import { DataSource } from 'typeorm';
 import { RegisterDto } from '../dto/register.dto';
 import { UserExists } from '../dto/user_exists.dto';
@@ -49,13 +49,14 @@ export class UsuarioService {
           return await queryRunner.manager.save(RolUsuario, rolUser)
         })
       )
-      queryRunner.commitTransaction()
+      await queryRunner.commitTransaction()
 
     }catch (err) {
       await queryRunner.rollbackTransaction()
-      await queryRunner.release()
       throw err
-    } 
+    } finally {
+      await queryRunner.release()
+    }
     return userCreated
   }
 
@@ -69,6 +70,40 @@ export class UsuarioService {
       existe: user? true: false,
       idUsuario: user? user.id: null,
       rol: roles? roles: null
+    }
+  }
+
+  async deleteUser(usuarioId: number){
+    const queryRunner = this.dataSource.createQueryRunner()
+    await queryRunner.connect()
+    await queryRunner.startTransaction()
+    let response;
+    try{
+      const pasos: Paso[] = await queryRunner.manager.find(Paso, {where: {idUsuario: usuarioId}})
+      Promise.all(
+        pasos.map(async paso => {
+          const partialPaso: Partial<Paso> = {
+            idUsuario: null
+          }
+          return await queryRunner.manager.update(Paso, paso.id, partialPaso)
+        })
+      )
+      response = await queryRunner.manager.delete(Usuario, usuarioId)
+      await queryRunner.commitTransaction()
+    }catch (err) {
+      await queryRunner.rollbackTransaction()
+      throw err
+    } finally {
+      await queryRunner.release()
+    }
+    if(response.affected === 0){
+      return {
+        "mensaje": "No se encontro el rol a borrar"
+      }
+    }else{
+      return {
+        "mensaje": `Se elimino ${response.affected} rol(es) correctamente`
+      }
     }
   }
 }

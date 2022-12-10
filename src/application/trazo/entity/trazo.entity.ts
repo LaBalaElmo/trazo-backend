@@ -34,21 +34,21 @@ export class Trazo extends BaseEntity {
     @Column("integer", { name: "paso_actual" })
     pasoActual: number;
 
-    @Column("integer", {name: "id_usuario", nullable: true})
+    @Column("integer", {name: "id_usuario", nullable: true, default: null})
     idUsuario: number;
 
     @ManyToOne(() => Usuario, (usuario) => usuario.trazo,{
-        nullable: false,
+        nullable: true,
         onDelete: "CASCADE"
     })
     @JoinColumn([{name: "id_usuario", referencedColumnName: "id"}])
     usuario: Usuario;
 
-    @Column("integer", {name: "id_rol", nullable: true})
+    @Column("integer", {name: "id_rol", nullable: true, default: null})
     idRol: number;
 
     @ManyToOne(() => Rol, (rol) => rol.trazo,{
-        nullable: false
+        nullable: true,
     })
     @JoinColumn([{name: "id_rol", referencedColumnName: "id"}])
     rol: Rol;

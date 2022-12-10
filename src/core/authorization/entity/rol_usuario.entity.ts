@@ -24,6 +24,7 @@ export class RolUsuario extends BaseEntity {
     
     @ManyToOne(() => Rol, (rol) => rol.rolUsuario, {
         nullable: false,
+        onDelete: 'CASCADE'
     })
     @JoinColumn([{ name: 'id_rol', referencedColumnName: 'id' }])
     rol: Rol
@@ -38,6 +39,7 @@ export class RolUsuario extends BaseEntity {
 
     @ManyToOne(() => Usuario, (usuario) => usuario.rolUsuario, {
         nullable: false,
+        onDelete: 'CASCADE'
     })
     @JoinColumn([{ name: 'id_usuario', referencedColumnName: 'id' }])
     usuario: Usuario

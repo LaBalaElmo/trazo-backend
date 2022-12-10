@@ -37,10 +37,18 @@ export class RolRepository {
   }
 
   async findAllRoles(): Promise<Rol[]>{
-    return this.dataSource.getRepository(Rol).find();
+    return await this.dataSource.getRepository(Rol).find();
   }
 
   async findPublicRoles(): Promise<Rol[]>{
-    return this.dataSource.getRepository(Rol).find({where: {esPublico: true}})
+    return await this.dataSource.getRepository(Rol).find({where: {esPublico: true}})
+  }
+
+  async updateRol(partialRol: Partial<Rol>){
+    return await this.dataSource.getRepository(Rol).update(partialRol.id, partialRol)
+  }
+
+  async deleteRol(rolId: number){
+    return await this.dataSource.getRepository(Rol).delete(rolId)
   }
 }

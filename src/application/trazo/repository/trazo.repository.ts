@@ -24,7 +24,7 @@ export class TrazoRepository {
       'paso.nombre'
     ])
 
-    return query.getMany();
+    return await query.getMany();
   }
 
   async findTrazoById(trazoId: number){
@@ -38,7 +38,7 @@ export class TrazoRepository {
       'paso'
     ]);
 
-    return query.getOne();
+    return await query.getOne();
   }
 
   async findTrazosByState(terminado: boolean): Promise<Trazo[]>{
@@ -51,6 +51,14 @@ export class TrazoRepository {
       'paso'
     ])
 
-    return query.getMany()
+    return await query.getMany()
+  }
+
+  async findTrazosByRol(rolId: number): Promise<Trazo[]>{
+    return await this.dataSource.getRepository(Trazo).find({where: {idRol: rolId}})
+  }
+
+  async updateTrazo(partialTrazo: Partial<Trazo>){
+    return await this.dataSource.getRepository(Trazo).update(partialTrazo.id, partialTrazo);
   }
 }

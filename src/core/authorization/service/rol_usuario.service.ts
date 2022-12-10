@@ -14,16 +14,16 @@ export class RolUsuarioService {
   ){}
 
   async saveRolUser(userId: number, rol: number[]): Promise<Rol[]>{
-    let roles: Rol[];
-    rol.forEach(async id => {
-      const rol: Rol = await this.rolRepository.findRolById(id)
-      roles.push(rol)
+    let roles: Rol[] = [];
+    for(let i = 0; i < rol.length; i++){
+      const rolFinded: Rol = await this.rolRepository.findRolById(rol[i])
+      roles.push(rolFinded)
       const rolUser = new RolUsuario({
-        idRol: rol.id,
+        idRol: rolFinded.id,
         idUsuario: userId
       })
       this.rolUsuarioRepository.saveRolUser(rolUser);
-    })
+    }
     return roles;
   }
 }

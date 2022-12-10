@@ -12,6 +12,8 @@ import { RolUsuarioService } from '../authorization/service/rol_usuario.service'
 import { RolUsuarioRepository } from '../authorization/repository/rol_usuario.repository';
 import { RolService } from 'src/application/rol/service/rol.service';
 import { JwtStrategy } from './strategy/jwt.strategy';
+import { PasoRepository } from 'src/application/trazo/repository/paso.repository';
+import { TrazoRepository } from 'src/application/trazo/repository/trazo.repository';
 
 dotenv.config();
 
@@ -33,7 +35,9 @@ dotenv.config();
     RolUsuarioService, 
     RolUsuarioRepository,
     RolService,
-    JwtStrategy
+    JwtStrategy,
+    PasoRepository,
+    TrazoRepository
   ],
   exports: [AuthenticationService],
   controllers: [AuthController]

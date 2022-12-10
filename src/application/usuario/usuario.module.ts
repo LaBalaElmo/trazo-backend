@@ -6,6 +6,8 @@ import { RolUsuarioService } from 'src/core/authorization/service/rol_usuario.se
 import { Rol } from '../rol/entity/rol.entity';
 import { RolRepository } from '../rol/repository/rol.repository';
 import { RolService } from '../rol/service/rol.service';
+import { PasoRepository } from '../trazo/repository/paso.repository';
+import { TrazoRepository } from '../trazo/repository/trazo.repository';
 import { UsuarioController } from './controller/usuario.controller';
 import { Usuario } from './entity/usuario.entity';
 import { UsuarioRepository } from './repository/usuario.repository';
@@ -13,7 +15,16 @@ import { UsuarioService } from './service/usuario.service';
 
 @Module({
   controllers: [UsuarioController],
-  providers: [UsuarioService, UsuarioRepository, RolRepository, RolUsuarioService, RolUsuarioRepository, RolService],
+  providers: [
+    UsuarioService, 
+    UsuarioRepository, 
+    RolRepository, 
+    RolUsuarioService, 
+    RolUsuarioRepository, 
+    RolService,
+    PasoRepository,
+    TrazoRepository
+  ],
   imports: [
     TypeOrmModule.forFeature([
       Usuario,

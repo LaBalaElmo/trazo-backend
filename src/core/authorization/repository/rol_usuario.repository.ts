@@ -11,4 +11,8 @@ export class RolUsuarioRepository {
   async saveRolUser(rolUsuario: RolUsuario): Promise<RolUsuario>{
     return await this.dataSource.getRepository(RolUsuario).save(rolUsuario);
   }
+
+  async findRolUsuarioByRolId(rolId: number): Promise<RolUsuario[]>{
+    return await this.dataSource.getRepository(RolUsuario).find({where: {idRol: rolId}})
+  }
 }
